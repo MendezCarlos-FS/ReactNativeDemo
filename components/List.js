@@ -6,7 +6,7 @@ export default function List({data, idField, displayField}) {
         <FlatList
             data={data}
             renderItem={({item}) => <ListItem item={item} displayField={displayField}/> }
-            keyExtractor={item => item[idField]}
+            keyExtractor={item => idField ? item[idField] : item}
         />
     );
 }

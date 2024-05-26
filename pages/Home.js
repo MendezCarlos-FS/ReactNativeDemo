@@ -42,7 +42,7 @@ export default function Home() {
                 <HeaderTag number={2}>All Pokemon:</HeaderTag>
                 <List data={pokemon} displayField={"name"} idField={"_id"}/>
                 <HeaderTag number={2}>Create New Pokemon:</HeaderTag>
-                <PokemonForm/>
+                <PokemonForm onSubmit={getPokemon}/>
             </View>
         </SafeAreaView>
     );

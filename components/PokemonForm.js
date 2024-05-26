@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import HeaderTag from "./HeaderTag";
 import NumberInput from "./NumberInput";
+import List from "./List";
+import Button from "./Button";
 
 const apiUrl = "https://crud-api-demo-114594dfaedf.herokuapp.com/api/v1/pokemon";
 
@@ -45,9 +47,9 @@ export default function PokemonForm({pokemon, onSubmit, onChange}) {
             if (onSubmit) onSubmit();
         });
         } catch(error) {
-        setError(error.message || "Unexpected Error");
+            setError(error.message || "Unexpected Error");
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     }
 
@@ -63,10 +65,6 @@ export default function PokemonForm({pokemon, onSubmit, onChange}) {
         }
         setValues(newValues);
         if (onChange) onChange(newValues);
-    }
-
-    const moveChange = ($event) => {
-        setCurrMove($event.target.value);
     }
 
     const deletePokemon = async() => {
@@ -88,23 +86,16 @@ export default function PokemonForm({pokemon, onSubmit, onChange}) {
     }
 
     const displayMoves = () => {
-        const moves = values.moves.map(move => {
-            return (
-                <li className="flex justify-content-between" key={move} value={move}>
-                    <h5>{move}</h5>
-                    <button type="button" onClick={() => removeMove(move)}>Delete</button>
-                </li>
-            );
-        });
-
         return (
-            <ul className="flex-col no-bullets">
-                {
-                    moves?.length
-                    ? moves
-                    : "No moves"
-                }
-            </ul>
+            <List
+                data={values.moves}/>
+            // <ul className="flex-col no-bullets">
+            //     {
+            //         moves?.length
+            //         ? moves
+            //         : "No moves"
+            //     }
+            // </ul>
         )
     }
 
@@ -149,25 +140,33 @@ export default function PokemonForm({pokemon, onSubmit, onChange}) {
                             value={values.level}/>
                     </View>
                 </View>
-                <View className="flex-col move-list">
-                    {/* <h5>List of Moves:</h5>
-                    {
-                        displayMoves()
-                    }
-                    <label>
-                        <h5>Move:</h5>
-                        <input id="move" type="text" onChange={moveChange}/>
-                        <input type="button" value="Add" onClick={() => addMove()}/>
-                    </label> */}
+                <View style={styles.moveList}>
+                    <HeaderTag number={5}>List of Moves:</HeaderTag>
+                    { displayMoves() }
+                    <View style={styles.label}>
+                        <TextInput
+                            placeholder="Enter Move Name"
+                            onChangeText={setCurrMove}/>
+                        <Button
+                            onPressOut={addMove}>
+                            Add
+                        </Button>
+                    </View>
                 </View>
             </View>
-            <View className="flex justify-content-evenly">
-                {/* <input type='submit' value="Submit"/>
+            <View style={styles.buttons}>
+                <Button
+                    onPressOut={handleSubmit}>
+                    Submit
+                </Button>
                 {
                     pokemon
-                    ? <input type="button" value="Delete" onClick={deletePokemon}/>
+                    ? <Button
+                        onPressOut={deletePokemon}>
+                        Delete
+                    </Button>
                     : <></>
-                } */}
+                }
             </View>
         </View>
     )
@@ -190,8 +189,17 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
     },
+    moveList: {
+        display: "flex",
+        flexDirection: "column",
+        borderWidth: 1,
+        borderColor: "#282c34",
+        padding: 5,
+        maxHeight: 200
+    },
     buttons: {
-
+        display: "flex",
+        justifyContent: "space-evenly",
     },
     label: {
         display: "flex",
