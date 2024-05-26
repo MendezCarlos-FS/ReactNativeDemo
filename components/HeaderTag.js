@@ -16,7 +16,7 @@ export default function HeaderTag({children, number}) {
 }
 const styles = StyleSheet.create({
     all: {
-        color: "white",
+        color: "auto",
         textAlign: "center",
     },
     h1: {
