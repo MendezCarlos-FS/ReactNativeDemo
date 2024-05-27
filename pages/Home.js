@@ -6,7 +6,7 @@ import PokemonForm from "../components/PokemonForm";
 
 const apiUrl = "https://crud-api-demo-114594dfaedf.herokuapp.com/api/v1/pokemon";
 
-export default function Home() {
+export default function Home({navigation}) {
     const [pokemon, setPokemon] = useState(null);
 
     let ignore = false;
@@ -40,7 +40,7 @@ export default function Home() {
             </HeaderTag>
             <View style={styles.body}>
                 <HeaderTag number={2}>All Pokemon:</HeaderTag>
-                <List data={pokemon} displayField={"name"} idField={"_id"}/>
+                <List data={pokemon} displayField={"name"} idField={"_id"} navigation={navigation}/>
                 <HeaderTag number={2}>Create New Pokemon:</HeaderTag>
                 <PokemonForm onSubmit={getPokemon}/>
             </View>

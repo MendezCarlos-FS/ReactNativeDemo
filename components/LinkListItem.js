@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { faClose } from '@fortawesome/free-solid-svg-icons/faClose';
 
-export default function ListItem({item, displayField, onDelete, entryColor}) {
+export default function LinkListItem({item, displayField, onDelete, entryColor, navigation, id}) {
     const value = displayField ? item[displayField] : item;
 
     const textStyle = { ...styles.text };
@@ -10,9 +10,13 @@ export default function ListItem({item, displayField, onDelete, entryColor}) {
         textStyle.color = entryColor
     }
 
+    function pressed() {
+        navigation.navigate("Pokemon", {id});
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={textStyle}>{value}</Text>
+            <Text style={textStyle} onPress={pressed}>{value}</Text>
             {
                 onDelete
                 ? <Pressable

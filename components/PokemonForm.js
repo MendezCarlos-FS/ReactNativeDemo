@@ -7,7 +7,7 @@ import Button from "./Button";
 
 const apiUrl = "https://crud-api-demo-114594dfaedf.herokuapp.com/api/v1/pokemon";
 
-export default function PokemonForm({pokemon, onSubmit, onChange}) {
+export default function PokemonForm({pokemon, onSubmit, onChange, onDelete}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [currMove, setCurrMove] = useState("");
@@ -75,8 +75,7 @@ export default function PokemonForm({pokemon, onSubmit, onChange}) {
             })
             .then(res => res.json())
             .then(json => {
-                // TODO: Replace with React Native equivalent
-                // navigate("/", { replace: true });
+                if (onDelete) onDelete();
             });
         } catch(error) {
             setError(error.message || "Unexpected Error");
@@ -88,14 +87,9 @@ export default function PokemonForm({pokemon, onSubmit, onChange}) {
     const displayMoves = () => {
         return (
             <List
-                data={values.moves}/>
-            // <ul className="flex-col no-bullets">
-            //     {
-            //         moves?.length
-            //         ? moves
-            //         : "No moves"
-            //     }
-            // </ul>
+                data={values.moves}
+                onDeleteEntry={removeMove}
+                entryColor={"#282c34"}/>
         )
     }
 
@@ -126,14 +120,14 @@ export default function PokemonForm({pokemon, onSubmit, onChange}) {
             <View style={styles.inputs}>
                 <View style={styles.inputFields}>
                     <View style={styles.label}>
-                        <HeaderTag number={5}>Name:</HeaderTag>
+                        <HeaderTag number={5} color={"#282c34"}>Name:</HeaderTag>
                         <TextInput
                             placeholder="Enter Name"
                             onChangeText={($event) => handleInputChanges($event, "name")}
                             value={values.name}/>
                     </View>
                     <View style={styles.label}>
-                        <HeaderTag number={5}>Level:</HeaderTag>
+                        <HeaderTag number={5} color={"#282c34"}>Level:</HeaderTag>
                         <NumberInput
                             placeholder="Enter Level"
                             onChangeText={($event) => handleInputChanges($event, "level")}
@@ -141,7 +135,7 @@ export default function PokemonForm({pokemon, onSubmit, onChange}) {
                     </View>
                 </View>
                 <View style={styles.moveList}>
-                    <HeaderTag number={5}>List of Moves:</HeaderTag>
+                    <HeaderTag number={5} color={"#282c34"}>List of Moves:</HeaderTag>
                     { displayMoves() }
                     <View style={styles.label}>
                         <TextInput

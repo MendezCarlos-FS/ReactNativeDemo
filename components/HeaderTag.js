@@ -1,10 +1,13 @@
 import { StyleSheet, Text } from "react-native";
 
-export default function HeaderTag({children, number}) {
+export default function HeaderTag({children, number, color}) {
     let hNumber = number ? number : 5;
     hNumber = hNumber > 5 || hNumber < 1 ? 5 : hNumber
 
     const finalStyle = { ...styles.all, ...styles[`h${hNumber}`]};
+    if (color) {
+        finalStyle.color = color;
+    }
 
     return (
         <Text
@@ -16,7 +19,7 @@ export default function HeaderTag({children, number}) {
 }
 const styles = StyleSheet.create({
     all: {
-        color: "auto",
+        color: "white",
         textAlign: "center",
     },
     h1: {
