@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#282c34",
         padding: 5,
-        maxHeight: 200
+        maxHeight: 300
     },
     buttons: {
         display: "flex",
