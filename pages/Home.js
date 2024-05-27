@@ -9,16 +9,13 @@ const apiUrl = "https://crud-api-demo-114594dfaedf.herokuapp.com/api/v1/pokemon"
 export default function Home({navigation}) {
     const [pokemon, setPokemon] = useState(null);
 
-    let ignore = false;
     useEffect(() => {
-        if (!ignore) {
+        const unsub = navigation.addListener("focus", () => {
             getPokemon();
-        }
+        });
 
-        return () => {
-            ignore = true;
-        }
-    }, []);
+        return unsub;
+    }, [navigation]);
 
     const getPokemon = async() => {
         try {

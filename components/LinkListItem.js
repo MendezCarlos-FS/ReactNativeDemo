@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     text: {
-        color: "white",
+        color: "#61dafb",
+        textDecorationLine: "underline"
     }
 });
